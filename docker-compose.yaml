@@ -1,0 +1,48 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  pg:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "myuser", "-d", "mydatabase"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrator:
+    image: migrator
+    ports:
+      - 9022:9022
+    depends_on:
+      pg:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://myuser:mypassword@pg:5432/mydatabase
+    volumes:
+      - migrator_data:/usr/migrator
+
+  poller:
+    image: poller
+    ports:
+     - 9011:9011
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
+    environment:
+      - DATABASE_URL=postgresql://myuser:mypassword@pg:5432/mydatabase
+  
+
+volumes:
+  pg_data:
+  migrator_data:

@@ -1,0 +1,21 @@
+FROM node:latest
+
+RUN mkdir /usr/migrator/
+
+RUN mkdir /usr/migrator/prisma
+
+WORKDIR /usr/migrator
+
+COPY package*.json .
+
+RUN npm install
+
+COPY ./prisma/schema.prisma ./prisma 
+
+COPY ./migrator-script.sh .
+
+RUN chmod +x migrator-script.sh
+
+EXPOSE 9022
+
+CMD ["./migrator-script.sh"]
