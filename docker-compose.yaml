@@ -4,7 +4,7 @@ version: '3.1'
 services:
 
   nuxt-btc:
-    image: michaelmorningstar/nuxt:latest-btc
+    image: michaelmorningstar/nuxt-btc:latest
     ports:
       - 3000:3000
     environment:
