@@ -4,7 +4,7 @@ version: '3.1'
 services:
 
   nuxt-btc:
-    image: nuxt-btc
+    image: michaelmorningstar/nuxt:latest-btc
     ports:
       - 3000:3000
     environment:
@@ -31,7 +31,7 @@ services:
       retries: 10
 
   migrator:
-    image: migrator
+    image: michaelmorningstar/migrator:latest
     ports:
       - 9022:9022
     depends_on:
@@ -43,7 +43,7 @@ services:
       - migrator_data:/usr/migrator
 
   poller:
-    image: poller
+    image: michaelmorningstar/poller:latest
     ports:
      - 9011:9011
     depends_on:
