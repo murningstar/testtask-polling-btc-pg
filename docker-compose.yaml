@@ -3,15 +3,15 @@ version: '3.1'
 
 services:
 
-  # nuxt-btc:
-  #   image: michaelmorningstar/nuxt-btc:latest
-  #   ports:
-  #     - 3000:3000
-  #   environment:
-  #     - DATABASE_URL=postgresql://myuser:mypassword@pg:5432/mydatabase
-  #   depends_on:
-  #     migrator:
-  #       condition: service_completed_successfully
+  nuxt-btc:
+    image: michaelmorningstar/nuxt-btc:latest
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://myuser:mypassword@pg:5432/mydatabase
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
 
   pg:
     image: postgres
